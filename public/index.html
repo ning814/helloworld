@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hello World —— 我的第一个 AI 开发的网站</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+    }
+    .card {
+      max-width: 680px;
+      margin: 20px;
+      padding: 48px 56px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    .time-label {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+    #serverTime {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffd166;
+      letter-spacing: 1px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 28px;
+      font-size: 14px;
+      color: #667eea;
+      background: #ffffff;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:hover {
+      opacity: 0.85;
+    }
+    .hint {
+      margin-top: 16px;
+      font-size: 12px;
+      opacity: 0.65;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Hello World！我是 jn，我的第一个AI开发的网站</h1>
+    <p class="time-label">当前服务器时间</p>
+    <p id="serverTime">加载中…</p>
+    <button id="refreshBtn" type="button">刷新时间</button>
+    <p class="hint">时间由服务器接口 /api/time 返回，点击“刷新时间”会重新向服务器请求</p>
+  </div>
+
+  <script>
+    const timeEl = document.getElementById('serverTime');
+
+    // 向服务器请求当前时间
+    function loadServerTime() {
+      fetch('/api/time')
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('HTTP ' + res.status);
+          }
+          return res.json();
+        })
+        .then((data) => {
+          timeEl.textContent = data.serverTime;
+        })
+        .catch((err) => {
+          timeEl.textContent = '获取失败：' + err.message;
+        });
+    }
+
+    // 页面加载时请求一次
+    loadServerTime();
+
+    // 点击按钮重新请求
+    document.getElementById('refreshBtn').addEventListener('click', loadServerTime);
+  </script>
+</body>
+</html>

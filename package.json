@@ -1,0 +1,13 @@
+{
+  "name": "helloworld-site",
+  "version": "1.0.0",
+  "description": "我的第一个 AI 开发的 Node.js 网站（零依赖，纯原生 HTTP 服务器）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "license": "MIT"
+}
